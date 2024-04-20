@@ -21,5 +21,12 @@ chrome.debugger.onEvent.addListener(function (source, method, params) {
   if (method === 'Network.responseReceived') {
     console.log('Response received:', params.response);
     // Perform your desired action with the response data
+    source.sendCommand(
+      'Network.getResponseBody',
+      { requestId: params.requestId },
+      function (response) {
+        console.log('Response body:', response.body);
+      }
+    );
   }
 });
